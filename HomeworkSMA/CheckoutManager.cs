@@ -1,22 +1,24 @@
 ﻿using System;
+using Microsoft.VisualBasic.FileIO;
+using System.Runtime.ConstrainedExecution;
 
 namespace HotelCheckOutSystem
 {
-    public class CheckOutController
+    public class CheckOutManager
     {
         private HotelSystem hotelSystem;
-        private Customer customer;
-        private Room room;
-        private PaymentProcessor paymentProcessor;
+        private CustomerInfo customer;
+        private RoomInfo room;
+        private Bill processBill;
         private ReceiptPrinter receiptPrinter;
-        private FrontDeskDisplay frontDeskDisplay;
+        private Display display;
 
-        public CheckOutController(HotelSystem hotelSystem)
+        public CheckOutManager(HotelSystem hotelSystem)
         {
             this.hotelSystem = hotelSystem;
-            paymentProcessor = new PaymentProcessor();
+            processBill = new Bill();
             receiptPrinter = new ReceiptPrinter();
-            frontDeskDisplay = new FrontDeskDisplay();
+            display = new Display();
         }
 
         public void SelectCheckout()
@@ -50,7 +52,7 @@ namespace HotelCheckOutSystem
         public void EnterCreditCardDetails(string cardNumber, string pin)
         {
             // 6. The system requests the bank to charge the fee.
-            bool paymentSuccess = paymentProcessor.ProcessPayment(cardNumber, pin, customer.TotalBill);
+            bool paymentSuccess = processBill.ProcessBill(cardNumber, pin, customer.TotalBill);
 
             if (paymentSuccess)
             {
@@ -59,10 +61,12 @@ namespace HotelCheckOutSystem
                 room.UpdateStatus("available");
                 // 11. The system increases the number of available rooms displayed at the front desk for the customers.
                 hotelSystem.IncrementAvailableRooms();
-                frontDeskDisplay.UpdateAvailableRoomsDisplay(hotelSystem.AvailableRooms);
+                display.UpdateAvailableRoomsDisplay(hotelSystem.AvailableRooms);
             }
             else
             {
+                // Step 7: If the bank denies, the system displays an error message and prompts the desk clerk to enter
+                //the different details.
                 // Alternative flow: Payment denied
                 Console.WriteLine("Payment denied. Please enter different credit card details.");
                 Console.WriteLine("Enter the customer's credit card number:");
@@ -78,7 +82,7 @@ namespace HotelCheckOutSystem
         public void SelectPrintReceipt()
         {
             // 9. The system prints the receipt.
-            receiptPrinter.PrintReceipt(customer, customer.TotalBill, paymentProcessor.ConfirmationNumber);
+            receiptPrinter.PrintReceipt(customer, customer.TotalBill, processBill.ConfirmationNumber);
         }
     }
 }

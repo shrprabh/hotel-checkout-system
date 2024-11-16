@@ -83,7 +83,7 @@ Please enter the PIN: 1234
 
 ——— Receipt ———
 
-**Customer Name:** John Doe
+**Customer Name:** Shreyas Prabhakar
 **Address:** 123 Main St
 **Amount Paid:** $250.00
 **Confirmation Number:** 989898

@@ -4,7 +4,7 @@ namespace HotelCheckOutSystem
 {
     public class ReceiptPrinter
     {
-        public void PrintReceipt(Customer customer, decimal amount, string confirmationNumber)
+        public void PrintReceipt(CustomerInfo customer, decimal amount, string confirmationNumber)
         {
             Console.WriteLine("Printing receipt...");
             Console.WriteLine("------- Receipt -------");

@@ -4,21 +4,22 @@ namespace HotelCheckOutSystem
 {
     public class HotelSystem
     {
+        // initializing the total rooms to 10 based on question
         public int TotalRooms { get; private set; } = 10;
         public int AvailableRooms { get; private set; } = 5;
-        private Dictionary<string, Room> rooms;
+        private Dictionary<string, RoomInfo> rooms;
 
         public HotelSystem()
         {
-            rooms = new Dictionary<string, Room>();
+            rooms = new Dictionary<string, RoomInfo>();
             // Initialize room 5373 with customer information
-            Room room = new Room("5373", "occupied");
-            Customer customer = new Customer("John Doe", "123 Main St", 250m);
+            RoomInfo room = new RoomInfo("5373", "occupied");
+            CustomerInfo customer = new CustomerInfo("Shreyas Prabhakar", "123 Main St", 250m);
             room.AssignCustomer(customer);
             rooms.Add("5373", room);
         }
 
-        public Customer GetCustomerInfo(string roomNumber)
+        public CustomerInfo GetCustomerInfo(string roomNumber)
         {
             if (rooms.ContainsKey(roomNumber))
             {
@@ -30,7 +31,7 @@ namespace HotelCheckOutSystem
             }
         }
 
-        public Room GetRoom(string roomNumber)
+        public RoomInfo GetRoom(string roomNumber)
         {
             if (rooms.ContainsKey(roomNumber))
             {

@@ -2,7 +2,7 @@
 
 namespace HotelCheckOutSystem
 {
-    public class FrontDeskDisplay
+    public class Display
     {
         public void UpdateAvailableRoomsDisplay(int availableRooms)
         {

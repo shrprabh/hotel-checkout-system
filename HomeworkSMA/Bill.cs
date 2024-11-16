@@ -1,10 +1,10 @@
 ﻿namespace HotelCheckOutSystem
 {
-    public class PaymentProcessor
+    public class Bill
     {
         public string ConfirmationNumber { get; private set; }
 
-        public bool ProcessPayment(string cardNumber, string pin, decimal amount)
+        public bool ProcessBill(string cardNumber, string pin, decimal amount)
         {
             // Simulate bank interaction
             Bank bank = new Bank();
